@@ -9,27 +9,41 @@ import kotlin.math.max
  */
 object BitmapUtils {
 
-    fun composeBitmap(src: Bitmap, dst: Bitmap, mode: PorterDuff.Mode): Bitmap {
-        val width = max(src.width, dst.width)
-        val height = max(src.height, dst.height)
-        val srcBitmap = src.copy(Bitmap.Config.ARGB_8888, true)
-        val dstBitmap = dst.copy(Bitmap.Config.ARGB_8888, true)
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
+    private val srcPaint by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG).run {
+            color = Color.parseColor("#1E80EF")
+            this
+        }
+    }
 
-        val paint = Paint()
-        paint.isAntiAlias = true
+    private val dstPaint by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG).run {
+            color = Color.parseColor("#E10050")
+            this
+        }
+    }
 
-        canvas.saveLayer(null, null)
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
-        canvas.drawBitmap(srcBitmap, 0f, 0f, paint)
+    private fun createSrcBitmap() = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888).run {
+        val canvas = Canvas(this)
+        canvas.drawRect(RectF(14f, 96f, 158f, 240f), srcPaint)
+        this
+    }
+
+    private fun createDstBitmap() = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888).run {
+        val canvas = Canvas(this)
+        canvas.drawCircle(162f,96f, 82f, dstPaint)
+        this
+    }
+
+    fun getCompositingBitmap(mode: PorterDuff.Mode): Bitmap {
+        val src = createSrcBitmap()
+        val dst = createDstBitmap()
+        val canvas = Canvas(dst)
         paint.xfermode = PorterDuffXfermode(mode)
-        canvas.drawBitmap(dstBitmap, 0f, 0f, paint)
-        paint.xfermode = null
-
-        canvas.restore()
-
-        return dstBitmap
+        canvas.drawBitmap(src, 0f, 0f, paint)
+        return dst
     }
 
 }
