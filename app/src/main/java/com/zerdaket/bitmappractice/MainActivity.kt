@@ -10,6 +10,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        PorterModeEnum.values()
         imageView.setImageBitmap(BitmapUtils.getCompositingBitmap(PorterDuff.Mode.SRC_IN))
     }
 }
