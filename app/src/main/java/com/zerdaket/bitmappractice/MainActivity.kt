@@ -1,16 +1,17 @@
 package com.zerdaket.bitmappractice
 
-import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.zerdaket.bitmappractice.utils.BitmapUtils
+import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        PorterModeEnum.values()
-        imageView.setImageBitmap(BitmapUtils.getCompositingBitmap(PorterDuff.Mode.SRC_IN))
+        recycler.layoutManager = GridLayoutManager(this, 3)
+        val adapter = BitmapAdapter()
+        recycler.adapter = adapter
+        adapter.setPorterModeList(PorterModeEnum.values().toList())
     }
 }
