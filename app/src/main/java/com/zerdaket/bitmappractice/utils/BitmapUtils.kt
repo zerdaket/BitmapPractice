@@ -9,18 +9,12 @@ import kotlin.math.max
  */
 object BitmapUtils {
 
-    private val srcPaint by lazy {
-        Paint(Paint.ANTI_ALIAS_FLAG).run {
-            color = Color.parseColor("#1E80EF")
-            this
-        }
+    private val srcPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.parseColor("#1E80EF")
     }
 
-    private val dstPaint by lazy {
-        Paint(Paint.ANTI_ALIAS_FLAG).run {
-            color = Color.parseColor("#E10050")
-            this
-        }
+    private val dstPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.parseColor("#E10050")
     }
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
